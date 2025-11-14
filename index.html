@@ -79,7 +79,7 @@
                 const emailBody = `
                     Notizen: ${notizen}\n
                     Datum und Uhrzeit: ${dateTime}\n
-                    Koordinaten: Latitude: ${lat}, Longitude: ${lon}
+                    Koordinaten: ${lat}, ${lon}
                 `;
                 // E-Mail an eine feste Adresse (wueest.marc@bluewin.ch) senden
                 const mailtoLink = `mailto:wueest.marc@bluewin.ch?subject=Notizen&body=${encodeURIComponent(emailBody)}`;
