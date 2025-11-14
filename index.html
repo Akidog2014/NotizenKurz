@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Notizen</title>
+    <style>
+        /* Setzt die Schriftart auf Arial für die gesamte Seite */
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-color: #f4f4f9;
+        }
+
+        /* Stile für den Button */
+        button {
+            display: block;
+            width: 100%;
+            padding: 12px;
+            font-size: 16px;
+            margin-top: 15px;
+            border: none;
+            border-radius: 5px;
+            background-color: #007bff;
+            color: white;
+            cursor: pointer;
+        }
+
+        /* Button Hover-Effekt */
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        /* Stile für das Textfeld */
+        textarea {
+            width: 100%;
+            font-size: 16px;
+            padding: 10px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+            box-sizing: border-box;
+        }
+
+        /* Stile für die Überschrift */
+        h1 {
+            color: #333;
+        }
+    </style>
+    <script>
+        // Funktion, um die aktuelle Uhrzeit und das Datum zu holen
+        function getDateTime() {
+            const now = new Date();
+            const date = now.toLocaleDateString('de-DE');
+            const time = now.toLocaleTimeString('de-DE');
+            return `${date} ${time}`;
+        }
+
+        // Funktion, um die aktuellen Koordinaten zu holen
+        function getCoordinates(callback) {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition(function(position) {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+                    callback(lat, lon);
+                }, function(error) {
+                    alert('Fehler beim Abrufen der Geolocation: ' + error.message);
+                });
+            } else {
+                alert('Geolocation wird von diesem Browser nicht unterstützt.');
+            }
+        }
+
+        // Funktion zum Erstellen der E-Mail
+        function sendEmail() {
+            const notizen = document.getElementById("notizen").value; // Text aus dem Textfeld
+            const dateTime = getDateTime(); // Aktuelles Datum und Uhrzeit
+            getCoordinates(function(lat, lon) {
+                const emailBody = `
+                    Notizen: ${notizen}\n
+                    Datum und Uhrzeit: ${dateTime}\n
+                    Koordinaten: Latitude: ${lat}, Longitude: ${lon}
+                `;
+                const mailtoLink = `mailto:?subject=Notizen&body=${encodeURIComponent(emailBody)}`;
+                window.location.href = mailtoLink; // E-Mail wird geöffnet
+            });
+        }
+    </script>
+</head>
+<body>
+    <h1>Notizen</h1>
+    <textarea id="notizen" placeholder="Deine Notizen hier eingeben..." rows="4" cols="50"></textarea><br><br>
+    <button onclick="sendEmail()">E-Mail erstellen</button>
+</body>
+</html>
