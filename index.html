@@ -81,7 +81,8 @@
                     Datum und Uhrzeit: ${dateTime}\n
                     Koordinaten: Latitude: ${lat}, Longitude: ${lon}
                 `;
-                const mailtoLink = `mailto:?subject=Notizen&body=${encodeURIComponent(emailBody)}`;
+                // E-Mail an eine feste Adresse (wueest.marc@bluewin.ch) senden
+                const mailtoLink = `mailto:wueest.marc@bluewin.ch?subject=Notizen&body=${encodeURIComponent(emailBody)}`;
                 window.location.href = mailtoLink; // E-Mail wird geöffnet
             });
         }
